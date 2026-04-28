@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
- 
+
   :root {
     --bg: #06100A;
     --bg2: #0D1F13;
@@ -23,9 +23,9 @@
     --border: rgba(242,237,227,0.08);
     --border2: rgba(232,160,32,0.2);
   }
- 
+
   html { scroll-behavior: smooth; }
- 
+
   body {
     background: var(--bg);
     color: var(--cream);
@@ -34,7 +34,67 @@
     line-height: 1.6;
     overflow-x: hidden;
   }
- 
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+@media screen and (max-width: 850px) {
+  /* 2. On réduit l'espace vide autour des sections */
+  section {
+    padding: 3rem 1.2rem !important; 
+  }
+
+  /* 3. On force TOUTES les grilles à passer sur 1 seule colonne */
+  /* (Ajoute ici d'autres classes si tu as d'autres grilles) */
+  .profil-grid, 
+  .features-grid, 
+  .program-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    text-align: left; /* Ou center selon tes goûts */
+  }
+
+  /* 4. On ajuste ta photo pour qu'elle ne casse pas l'écran */
+  .profil-photo-wrap {
+    width: 100% !important;
+    max-width: 320px !important; /* La photo ne sera jamais plus large que ça */
+    height: 350px !important;
+    margin: 0 auto 2rem auto !important; /* On la centre */
+  }
+
+  /* 5. On diminue drastiquement la taille des titres */
+  h1 {
+    font-size: 2.2rem !important;
+    line-height: 1.1;
+  }
+  
+  h2 {
+    font-size: 1.8rem !important;
+  }
+
+  /* 6. On adapte la barre de navigation */
+  .nav-inner {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+  
+  .nav-links {
+    flex-wrap: wrap; /* Permet aux liens d'aller à la ligne */
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  /* 7. On ajuste les compteurs animés (tes balises avec data-count) */
+  .profil-stats {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+}
+
   /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -71,7 +131,7 @@
     color: var(--muted);
     letter-spacing: 0.08em;
   }
- 
+
   /* ── HERO ── */
   #hero {
     min-height: 100vh;
@@ -177,7 +237,7 @@
     background: linear-gradient(to bottom, var(--muted), transparent);
     animation: scrollPulse 2s ease-in-out infinite;
   }
- 
+
   /* ── SECTIONS COMMUNES ── */
   section { padding: 7rem 3rem; }
   .section-label {
@@ -193,7 +253,7 @@
     letter-spacing: -0.02em;
   }
   .section-title span { color: var(--gold); }
- 
+
   /* ── VISION ── */
   #vision { background: var(--bg2); }
   .vision-inner {
@@ -231,7 +291,7 @@
     font-size: 13px; color: var(--cream2);
     margin-top: 0.5rem; line-height: 1.4;
   }
- 
+
   /* ── PROGRAMME ── */
   #programme { background: var(--bg); }
   .prog-header {
@@ -300,7 +360,7 @@
     border-color: var(--gold);
     background: rgba(232,160,32,0.08);
   }
- 
+
   /* ── PLATEFORME ── */
   #plateforme { background: var(--bg3); }
   .plat-inner { max-width: 1200px; margin: 0 auto; }
@@ -382,7 +442,7 @@
     color: var(--cream); margin-bottom: 0.35rem;
   }
   .feat-desc { font-size: 0.9rem; color: var(--cream2); line-height: 1.6; }
- 
+
   /* ── CLUBS ── */
   #clubs { background: var(--bg); }
   .clubs-inner { max-width: 1200px; margin: 0 auto; }
@@ -413,7 +473,7 @@
   }
   .club-action { font-size: 12px; color: var(--muted); line-height: 1.5; }
   .club-card:hover .club-name { color: var(--gold); }
- 
+
   .collab-banner {
     max-width: 1200px; margin: 3rem auto 0;
     background: linear-gradient(135deg, rgba(26,107,60,0.15), rgba(232,160,32,0.08));
@@ -428,7 +488,7 @@
     max-width: 600px; line-height: 1.4;
   }
   .collab-text span { color: var(--gold); }
- 
+
   /* ── MANIFESTO ── */
   #manifesto { background: var(--bg2); }
   .manifesto-inner {
@@ -453,7 +513,7 @@
     font-size: 12px; letter-spacing: 0.1em;
     color: var(--muted);
   }
- 
+
   /* ── FOOTER ── */
   footer {
     background: var(--bg);
@@ -474,7 +534,7 @@
     font-size: 1rem; font-weight: 800;
     color: var(--cream);
   }
- 
+
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     to { opacity: 1; transform: translateY(0); }
@@ -486,7 +546,7 @@
     0%, 100% { opacity: 0.3; }
     50% { opacity: 1; }
   }
- 
+
   .reveal {
     opacity: 0; transform: translateY(40px);
     transition: opacity 0.7s ease, transform 0.7s ease;
@@ -499,178 +559,7 @@
   .reveal-delay-3 { transition-delay: 0.3s; }
   .reveal-delay-4 { transition-delay: 0.4s; }
   .reveal-delay-5 { transition-delay: 0.5s; }
- 
-  /* ── HAMBURGER ── */
-  .nav-burger {
-    display: none;
-    flex-direction: column; justify-content: center; align-items: center;
-    gap: 5px; background: none; border: none; cursor: pointer;
-    padding: 4px; z-index: 200;
-  }
-  .nav-burger span {
-    display: block; width: 22px; height: 2px;
-    background: var(--cream);
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    transform-origin: center;
-  }
-  .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-  .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
- 
-  /* ── MOBILE MENU ── */
-  .mobile-menu {
-    display: none;
-    position: fixed; inset: 0; z-index: 90;
-    background: rgba(6,16,10,0.97);
-    backdrop-filter: blur(16px);
-    flex-direction: column; justify-content: center; align-items: center;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.35s ease;
-  }
-  .mobile-menu.open {
-    opacity: 1; pointer-events: all;
-  }
-  .mobile-menu ul {
-    list-style: none; display: flex; flex-direction: column;
-    align-items: center; gap: 2.5rem;
-  }
-  .mobile-menu ul a {
-    font-family: 'Syne', sans-serif;
-    font-size: 2rem; font-weight: 800;
-    color: var(--cream2); text-decoration: none;
-    letter-spacing: -0.02em;
-    transition: color 0.2s;
-  }
-  .mobile-menu ul a:hover { color: var(--gold); }
- 
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 2px; }
- 
-  /* ══════════════════════════════
-     RESPONSIVE — TABLET (≤ 1024px)
-  ══════════════════════════════ */
-  @media (max-width: 1024px) {
-    /* profil : réduit la colonne photo */
-    .profil-inner { grid-template-columns: 320px 1fr; gap: 3.5rem; }
- 
-    /* vision : réduit le gap */
-    .vision-inner { gap: 3rem; }
- 
-    /* plateforme : passe en colonne */
-    .plat-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .plat-mockup { max-width: 560px; }
- 
-    /* clubs : 2 colonnes sur tablet */
-    .clubs-grid { grid-template-columns: repeat(2, 1fr); }
- 
-    /* axes : réduit numéro */
-    .axe-num { font-size: 4rem; }
-  }
- 
-  /* ══════════════════════════════
-     RESPONSIVE — MOBILE (≤ 768px)
-  ══════════════════════════════ */
-  @media (max-width: 768px) {
- 
-    /* ── NAV ── */
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { display: none; }
-    .nav-burger { display: flex; }
-    .mobile-menu { display: flex; }
- 
-    /* ── SECTIONS ── */
-    section { padding: 4.5rem 1.25rem; }
-    #hero { padding: 0 1.25rem 4rem; }
-    #profil { padding: 5rem 1.25rem; }
- 
-    /* ── HERO ── */
-    .hero-scroll { display: none; }
-    .hero-tag { font-size: 9px; letter-spacing: 0.1em; }
-    .hero-cta { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-    .btn-primary { width: 100%; justify-content: center; }
- 
-    /* ── PROFIL ── */
-    .profil-inner { grid-template-columns: 1fr; gap: 2rem; }
-    .profil-photo-wrap { max-width: 280px; margin: 0 auto; }
-    .profil-photo-frame { aspect-ratio: 3/4; }
-    .profil-cards { grid-template-columns: 1fr; }
-    .profil-headline { font-size: 2rem; }
- 
-    /* ── VISION ── */
-    .vision-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    .vision-stats { grid-template-columns: 1fr 1fr; }
-    .stat-num { font-size: 2.25rem; }
- 
-    /* ── PROGRAMME ── */
-    .prog-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-    .axe-row {
-      grid-template-columns: 50px 1fr;
-      gap: 1rem; padding: 2rem 0;
-    }
-    .axe-icon { display: none; }
-    .axe-num { font-size: 2.5rem; }
-    .axe-title { font-size: 1.15rem; }
- 
-    /* ── PLATEFORME ── */
-    .plat-grid { grid-template-columns: 1fr; gap: 2rem; margin-top: 2.5rem; }
-    .plat-mockup { font-size: 13px; }
-    .mockup-nav { gap: 0.75rem; overflow-x: auto; }
-    .m-tab { white-space: nowrap; font-size: 11px; }
- 
-    /* ── CLUBS ── */
-    .clubs-intro { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem; }
-    .clubs-grid { grid-template-columns: 1fr 1fr; }
-    .club-card { padding: 1.25rem 1rem; }
-    .collab-banner {
-      flex-direction: column; text-align: center;
-      padding: 1.75rem 1.25rem;
-    }
-    .collab-banner .btn-primary { width: 100%; justify-content: center; }
-    .collab-text { font-size: 1rem; }
- 
-    /* ── MANIFESTO ── */
-    .manifesto-text { font-size: 1.4rem; }
-    .manifesto-sig { flex-direction: column; gap: 0.75rem; text-align: center; }
-    .sig-line { width: 40px; height: 1px; }
- 
-    /* ── FOOTER ── */
-    footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 2rem 1.25rem; }
-  }
- 
-  /* ══════════════════════════════
-     RESPONSIVE — SMALL (≤ 480px)
-  ══════════════════════════════ */
-  @media (max-width: 480px) {
-    section { padding: 4rem 1rem; }
-    #hero { padding: 0 1rem 3.5rem; }
- 
-    /* hero name encore plus petit */
-    .hero-name { font-size: clamp(2.5rem, 12vw, 4rem); }
- 
-    /* clubs : 1 colonne sur très petit écran */
-    .clubs-grid { grid-template-columns: 1fr; }
- 
-    /* vision stats : 1 colonne */
-    .vision-stats { grid-template-columns: 1fr; }
- 
-    /* axe row : encore plus compact */
-    .axe-row { grid-template-columns: 40px 1fr; gap: 0.75rem; padding: 1.5rem 0; }
-    .axe-num { font-size: 2rem; }
- 
-    /* section title réduit */
-    .section-title { font-size: 1.75rem; }
- 
-    /* pcard full */
-    .profil-cards { grid-template-columns: 1fr; }
- 
-    /* manifesto */
-    .manifesto-text { font-size: 1.2rem; }
- 
-    /* footer logo */
-    .footer-logo { font-size: 0.9rem; }
-  }
+
   /* ── PROFIL ── */
   #profil { background: var(--bg); padding: 7rem 3rem; }
   .profil-inner {
@@ -678,6 +567,7 @@
     display: grid; grid-template-columns: 420px 1fr;
     gap: 6rem; align-items: start;
   }
+  .profil-photo-wrap { position: relative; }
   .profil-photo-frame {
     position: relative;
     width: 100%; aspect-ratio: 3/4;
@@ -813,14 +703,33 @@
     border-color: var(--border2);
     color: var(--gold2);
   }
- 
+  @media (max-width: 768px) {
+    .profil-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .profil-photo-frame { aspect-ratio: 1/1; }
+    .profil-cards { grid-template-columns: 1fr; }
+  }
+
+  /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 2px; }
- 
- 
-</style>
 
+  /* ── RESPONSIVE MINIMAL ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 1.5rem; }
+    #hero { padding: 0 1.5rem 4rem; }
+    .vision-inner, .plat-grid, .clubs-intro { grid-template-columns: 1fr; gap: 2rem; }
+    .prog-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .axe-row { grid-template-columns: 60px 1fr; gap: 1rem; }
+    .axe-icon { display: none; }
+    .axe-num { font-size: 3rem; }
+    .clubs-grid { grid-template-columns: repeat(2, 1fr); }
+    .collab-banner { flex-direction: column; text-align: center; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
 </head>
 <body>
 
