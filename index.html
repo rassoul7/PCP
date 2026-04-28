@@ -57,11 +57,26 @@ html, body {
   }
 
   /* 4. On ajuste ta photo pour qu'elle ne casse pas l'écran */
+/* 4. On ajuste le cadre photo pour qu'il garde des proportions parfaites */
   .profil-photo-wrap {
     width: 100% !important;
-    max-width: 320px !important; /* La photo ne sera jamais plus large que ça */
-    height: 350px !important;
-    margin: 0 auto 2rem auto !important; /* On la centre */
+    max-width: 280px !important; /* Légèrement plus petit pour faire plus propre */
+    height: auto !important; /* On enlève la hauteur fixe qui écrase tout */
+    aspect-ratio: 4 / 5 !important; /* Force un format portrait parfait (style Instagram) */
+    margin: 0 auto 2.5rem auto !important;
+  }
+
+  /* On s'assure que le cadre intérieur prend bien toute la place */
+  .profil-photo-frame {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* La sécurité absolue anti-déformation pour l'image */
+  .profil-photo-frame img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* Force l'image à couper ce qui dépasse au lieu de s'écraser */
   }
 
   /* 5. On diminue drastiquement la taille des titres */
