@@ -41,70 +41,60 @@ html, body {
 }
 
 @media screen and (max-width: 850px) {
-  /* 1. On garde le logo et le bouton bien alignés sur la même ligne */
+  /* 2. On réduit l'espace vide autour des sections */
+  section {
+    padding: 3rem 1.2rem !important; 
+  }
+
+  /* 3. On force TOUTES les grilles à passer sur 1 seule colonne */
+  /* (Ajoute ici d'autres classes si tu as d'autres grilles) */
+  .profil-grid, 
+  .features-grid, 
+  .program-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+    text-align: left; /* Ou center selon tes goûts */
+  }
+
+  /* 4. On ajuste ta photo pour qu'elle ne casse pas l'écran */
+  .profil-photo-wrap {
+    width: 100% !important;
+    max-width: 320px !important; /* La photo ne sera jamais plus large que ça */
+    height: 350px !important;
+    margin: 0 auto 2rem auto !important; /* On la centre */
+  }
+
+  /* 5. On diminue drastiquement la taille des titres */
+  h1 {
+    font-size: 2.2rem !important;
+    line-height: 1.1;
+  }
+  
+  h2 {
+    font-size: 1.8rem !important;
+  }
+
+  /* 6. On adapte la barre de navigation */
   .nav-inner {
-    flex-direction: row; /* Aligné horizontalement */
-    justify-content: space-between; /* Logo à gauche, Hamburger à droite */
-    align-items: center; /* Centré verticalement */
-    flex-wrap: wrap; /* Permet au menu de passer en dessous */
+    flex-direction: column;
+    gap: 1rem;
     padding: 1rem 0;
   }
-
-  /* 2. Un design plus "Premium" pour le bouton */
-  .hamburger {
-    display: flex;
-    position: relative; /* Plus de position absolute qui cassait tout */
-    width: 44px;
-    height: 44px;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--bg2); /* Petit fond légèrement plus clair que le noir */
-    border: 1px solid var(--border); /* Bordure subtile */
-    border-radius: 8px; /* Coins arrondis */
-    transition: all 0.3s ease;
-  }
-
-  .hamburger:hover, .hamburger:active {
-    background-color: var(--bg3);
-  }
-
-  /* Lignes plus fines et resserrées */
-  .hamburger span {
-    width: 22px;
-    height: 2px; /* Plus fin, plus élégant */
-    margin: 2px 0;
-    transform-origin: center;
-  }
-
-  /* 3. Le menu déroulant qui s'affiche en dessous */
+  
   .nav-links {
-    display: none; 
+    flex-wrap: wrap; /* Permet aux liens d'aller à la ligne */
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  /* 7. On ajuste les compteurs animés (tes balises avec data-count) */
+  .profil-stats {
     flex-direction: column;
-    width: 100%; /* Prend toute la largeur en dessous */
-    background-color: var(--bg2);
-    padding: 1rem;
-    margin-top: 1rem;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    text-align: center;
-  }
-
-  .nav-links.active {
-    display: flex;
-    animation: fadeIn 0.3s ease;
-  }
-
-  /* 4. Animation de la croix ajustée pour les nouvelles marges */
-  .hamburger.active span:nth-child(1) {
-    transform: translateY(6px) rotate(45deg);
-  }
-  .hamburger.active span:nth-child(2) {
-    opacity: 0;
-  }
-  .hamburger.active span:nth-child(3) {
-    transform: translateY(-6px) rotate(-45deg);
+    gap: 1.5rem;
+    align-items: flex-start;
   }
 }
+
   /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -761,45 +751,68 @@ html, body {
 
 /* Sur Mobile (à mettre dans tes Media Queries existantes) */
 @media screen and (max-width: 850px) {
-  .hamburger {
-    display: flex; /* On l'affiche ! */
-    position: absolute;
-    right: 1.5rem;
-    top: 1.5rem;
-  }
-
+  /* 1. On garde le logo et le bouton bien alignés sur la même ligne */
   .nav-inner {
-    flex-direction: column;
-    align-items: flex-start; /* Aligne le logo à gauche */
+    flex-direction: row; /* Aligné horizontalement */
+    justify-content: space-between; /* Logo à gauche, Hamburger à droite */
+    align-items: center; /* Centré verticalement */
+    flex-wrap: wrap; /* Permet au menu de passer en dessous */
+    padding: 1rem 0;
   }
 
-  /* On cache le menu de base */
+  /* 2. Un design plus "Premium" pour le bouton */
+  .hamburger {
+    display: flex;
+    position: relative; /* Plus de position absolute qui cassait tout */
+    width: 44px;
+    height: 44px;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg2); /* Petit fond légèrement plus clair que le noir */
+    border: 1px solid var(--border); /* Bordure subtile */
+    border-radius: 8px; /* Coins arrondis */
+    transition: all 0.3s ease;
+  }
+
+  .hamburger:hover, .hamburger:active {
+    background-color: var(--bg3);
+  }
+
+  /* Lignes plus fines et resserrées */
+  .hamburger span {
+    width: 22px;
+    height: 2px; /* Plus fin, plus élégant */
+    margin: 2px 0;
+    transform-origin: center;
+  }
+
+  /* 3. Le menu déroulant qui s'affiche en dessous */
   .nav-links {
     display: none; 
     flex-direction: column;
-    width: 100%;
-    background-color: var(--bg2); /* Fond de menu */
-    padding: 1.5rem 0;
+    width: 100%; /* Prend toute la largeur en dessous */
+    background-color: var(--bg2);
+    padding: 1rem;
     margin-top: 1rem;
-    border-radius: 8px;
+    border-radius: 12px;
     border: 1px solid var(--border);
+    text-align: center;
   }
 
-  /* Classe qui sera ajoutée par le Javascript pour afficher le menu */
   .nav-links.active {
     display: flex;
     animation: fadeIn 0.3s ease;
   }
 
-  /* Petite animation stylée : le hamburger se transforme en Croix (X) */
+  /* 4. Animation de la croix ajustée pour les nouvelles marges */
   .hamburger.active span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
+    transform: translateY(6px) rotate(45deg);
   }
   .hamburger.active span:nth-child(2) {
     opacity: 0;
   }
   .hamburger.active span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
+    transform: translateY(-6px) rotate(-45deg);
   }
 }
 
