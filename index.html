@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programme — Commission Pédagogique ESP UCAD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #06100A;
+    --bg2: #0D1F13;
+    --bg3: #122518;
+    --cream: #F2EDE3;
+    --cream2: #BFB8A8;
+    --gold: #E8A020;
+    --gold2: #F5C05A;
+    --green: #1A6B3C;
+    --green-light: #2A8A52;
+    --muted: #5A7A60;
+    --border: rgba(242,237,227,0.08);
+    --border2: rgba(232,160,32,0.2);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  @media (max-width: 992px) {
+  /* On empile le texte et la photo de profil */
+  .profil-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .profil-photo-wrap {
+    margin: 0 auto; /* Centre la photo */
+    width: 280px;
+    height: 320px;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 8vw, 4rem); /* Titre plus petit sur mobile */
+  }
+
+  .profil-stats {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Navigation mobile */
+  nav {
+    padding: 1rem;
+  }
+
+  .nav-inner {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .nav-links {
+    display: none; /* Tu pourrais ajouter un menu burger plus tard */
+  }
+
+  /* Les cartes de ton programme (si tu en as en colonnes) */
+  .features-grid, .program-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Ajustement des marges globales */
+  .container {
+    padding: 0 1.5rem;
+  }
+  
+  section {
+    padding: 4rem 0;
+  }
+}
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem;
+    transition: background 0.4s ease, border-bottom 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(6,16,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--cream2);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 3rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(26,107,60,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(232,160,32,0.06) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
+    opacity: 0.5;
+  }
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7.5rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    color: var(--cream);
+    opacity: 0; transform: translateY(30px);
+    animation: fadeUp 0.9s ease 0.5s forwards;
+  }
+  .hero-name em {
+    font-style: normal;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(242,237,227,0.4);
+  }
+  .hero-title {
+    margin-top: 1.5rem;
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    color: var(--cream2);
+    max-width: 600px;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.9s ease 0.8s forwards;
+  }
+  .hero-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    letter-spacing: 0.04em;
+  }
+  .hero-cta {
+    margin-top: 2.5rem;
+    display: flex; gap: 1rem; align-items: center;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 0.9s ease 1.1s forwards;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold);
+    color: #06100A;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 0.85rem 1.75rem;
+    border-radius: 2px;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+  .btn-ghost {
+    font-size: 13px; color: var(--cream2);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+    border-bottom: 1px solid var(--border2);
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--gold); }
+  .hero-scroll {
+    position: absolute; bottom: 2rem; right: 3rem;
+    display: flex; align-items: center; gap: 0.75rem;
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase;
+    writing-mode: vertical-rl;
+    opacity: 0; animation: fadeIn 1s ease 1.5s forwards;
+  }
+  .scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--muted), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── SECTIONS COMMUNES ── */
+  section { padding: 7rem 3rem; }
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.16em;
+    color: var(--gold); text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .section-title span { color: var(--gold); }
+
+  /* ── VISION ── */
+  #vision { background: var(--bg2); }
+  .vision-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+    align-items: center; max-width: 1200px; margin: 0 auto;
+  }
+  .vision-quote {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 600; line-height: 1.3;
+    color: var(--cream);
+    border-left: 3px solid var(--gold);
+    padding-left: 2rem;
+  }
+  .vision-quote em { font-style: italic; color: var(--gold2); }
+  .vision-text {
+    color: var(--cream2); font-size: 1rem; line-height: 1.8;
+  }
+  .vision-text p + p { margin-top: 1.25rem; }
+  .vision-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--border);
+    margin-top: 3rem; border: 1px solid var(--border);
+  }
+  .stat-box {
+    background: var(--bg2);
+    padding: 2rem;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 3rem; font-weight: 800;
+    color: var(--gold); line-height: 1;
+  }
+  .stat-label {
+    font-size: 13px; color: var(--cream2);
+    margin-top: 0.5rem; line-height: 1.4;
+  }
+
+  /* ── PROGRAMME ── */
+  #programme { background: var(--bg); }
+  .prog-header {
+    max-width: 1200px; margin: 0 auto 4rem;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    border-bottom: 1px solid var(--border); padding-bottom: 3rem;
+  }
+  .prog-intro { font-size: 1rem; color: var(--cream2); max-width: 400px; line-height: 1.7; }
+  .axes-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 0;
+  }
+  .axe-row {
+    display: grid; grid-template-columns: 120px 1fr auto;
+    align-items: start; gap: 3rem;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+    cursor: default;
+  }
+  .axe-row:hover { background: rgba(242,237,227,0.02); }
+  .axe-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 5rem; font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(242,237,227,0.12);
+    line-height: 1;
+    transition: -webkit-text-stroke 0.3s, color 0.3s;
+  }
+  .axe-row:hover .axe-num {
+    color: var(--gold);
+    -webkit-text-stroke: 1px transparent;
+  }
+  .axe-content {}
+  .axe-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--cream); margin-bottom: 0.75rem;
+  }
+  .axe-desc {
+    font-size: 0.95rem; color: var(--cream2); line-height: 1.7;
+    max-width: 600px;
+  }
+  .axe-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem;
+  }
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 0.08em;
+    color: var(--muted); border: 1px solid var(--border);
+    padding: 4px 10px; border-radius: 2px;
+    text-transform: uppercase;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .axe-row:hover .tag { color: var(--gold2); border-color: var(--border2); }
+  .axe-icon {
+    width: 48px; height: 48px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    transition: border-color 0.3s, background 0.3s;
+    flex-shrink: 0;
+  }
+  .axe-row:hover .axe-icon {
+    border-color: var(--gold);
+    background: rgba(232,160,32,0.08);
+  }
+
+  /* ── PLATEFORME ── */
+  #plateforme { background: var(--bg3); }
+  .plat-inner { max-width: 1200px; margin: 0 auto; }
+  .plat-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; margin-top: 4rem; align-items: start;
+  }
+  .plat-mockup {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .mockup-bar {
+    background: var(--bg);
+    padding: 0.75rem 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #FF5F57; }
+  .dot-y { background: #FEBC2E; }
+  .dot-g { background: #28C840; }
+  .mockup-nav {
+    background: var(--bg);
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 1.5rem;
+  }
+  .m-tab {
+    font-size: 12px; color: var(--muted); padding: 4px 0;
+    cursor: pointer; letter-spacing: 0.04em;
+  }
+  .m-tab.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
+  .mockup-body { padding: 1.5rem; }
+  .m-search {
+    background: rgba(242,237,227,0.04);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.6rem 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .m-search-icon { color: var(--muted); font-size: 14px; }
+  .m-search-text { font-size: 13px; color: var(--muted); }
+  .m-card {
+    background: rgba(242,237,227,0.03);
+    border: 1px solid var(--border);
+    border-radius: 3px; padding: 0.875rem;
+    margin-bottom: 0.75rem;
+    display: flex; align-items: flex-start; gap: 0.75rem;
+  }
+  .m-card-icon {
+    width: 32px; height: 32px; border-radius: 2px;
+    background: rgba(232,160,32,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+  .m-card-title { font-size: 13px; font-weight: 600; color: var(--cream); }
+  .m-card-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .m-badge {
+    font-size: 10px; font-family: 'Space Mono', monospace;
+    background: rgba(26,107,60,0.3); color: #6ECFA0;
+    padding: 2px 8px; border-radius: 2px;
+    margin-top: 4px; display: inline-block;
+  }
+  .plat-features { display: flex; flex-direction: column; gap: 1.5rem; }
+  .feat-item {
+    display: flex; gap: 1.25rem; align-items: flex-start;
+  }
+  .feat-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; color: var(--gold);
+    min-width: 24px; padding-top: 2px;
+  }
+  .feat-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 1rem;
+    color: var(--cream); margin-bottom: 0.35rem;
+  }
+  .feat-desc { font-size: 0.9rem; color: var(--cream2); line-height: 1.6; }
+
+  /* ── CLUBS ── */
+  #clubs { background: var(--bg); }
+  .clubs-inner { max-width: 1200px; margin: 0 auto; }
+  .clubs-intro {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; margin-bottom: 4rem; align-items: center;
+  }
+  .clubs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .club-card {
+    background: var(--bg);
+    padding: 1.75rem 1.5rem;
+    display: flex; flex-direction: column;
+    gap: 0.75rem;
+    transition: background 0.25s;
+    cursor: default;
+  }
+  .club-card:hover { background: var(--bg2); }
+  .club-emoji { font-size: 1.5rem; }
+  .club-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem; font-weight: 700;
+    color: var(--cream);
+  }
+  .club-action { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .club-card:hover .club-name { color: var(--gold); }
+
+  .collab-banner {
+    max-width: 1200px; margin: 3rem auto 0;
+    background: linear-gradient(135deg, rgba(26,107,60,0.15), rgba(232,160,32,0.08));
+    border: 1px solid var(--border2);
+    padding: 2.5rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 2rem;
+  }
+  .collab-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem; font-weight: 700; color: var(--cream);
+    max-width: 600px; line-height: 1.4;
+  }
+  .collab-text span { color: var(--gold); }
+
+  /* ── MANIFESTO ── */
+  #manifesto { background: var(--bg2); }
+  .manifesto-inner {
+    max-width: 900px; margin: 0 auto; text-align: center;
+  }
+  .manifesto-text {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700; line-height: 1.3;
+    color: var(--cream);
+  }
+  .manifesto-text em {
+    font-style: italic; color: var(--gold);
+  }
+  .manifesto-sig {
+    margin-top: 3rem;
+    display: inline-flex; align-items: center; gap: 1rem;
+  }
+  .sig-line { width: 40px; height: 1px; background: var(--gold); }
+  .sig-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-left {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; color: var(--muted); letter-spacing: 0.08em;
+  }
+  .footer-right {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; color: var(--muted); letter-spacing: 0.08em;
+  }
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem; font-weight: 800;
+    color: var(--cream);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1; transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+
+  /* ── PROFIL ── */
+  #profil { background: var(--bg); padding: 7rem 3rem; }
+  .profil-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 420px 1fr;
+    gap: 6rem; align-items: start;
+  }
+  .profil-photo-wrap { position: relative; }
+  .profil-photo-frame {
+    position: relative;
+    width: 100%; aspect-ratio: 3/4;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .profil-photo-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    display: block;
+    filter: grayscale(20%) contrast(1.05);
+    transition: filter 0.4s;
+  }
+  .profil-photo-frame:hover img { filter: grayscale(0%) contrast(1); }
+  .profil-photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 1rem;
+    background: var(--bg3);
+    cursor: pointer;
+    position: relative;
+  }
+  .profil-photo-placeholder input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; z-index: 2;
+  }
+  .placeholder-icon {
+    width: 64px; height: 64px;
+    border: 2px dashed var(--muted);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 1.5rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .profil-photo-placeholder:hover .placeholder-icon {
+    border-color: var(--gold); color: var(--gold);
+  }
+  .placeholder-text {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.1em;
+    color: var(--muted); text-align: center; text-transform: uppercase;
+    line-height: 1.6;
+  }
+  .profil-photo-placeholder:hover .placeholder-text { color: var(--gold2); }
+  .photo-corner {
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--gold);
+    border-style: solid;
+    opacity: 0.6;
+  }
+  .photo-corner-tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .photo-corner-tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+  .photo-corner-bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+  .photo-corner-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+  .profil-badge-overlay {
+    position: absolute; bottom: -1px; left: -1px; right: -1px;
+    background: linear-gradient(to top, rgba(6,16,10,0.9) 0%, transparent 100%);
+    padding: 2.5rem 1.5rem 1.5rem;
+    display: flex; align-items: flex-end; justify-content: space-between;
+  }
+  .overlay-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.25rem;
+    color: var(--cream);
+  }
+  .overlay-promo {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase; margin-top: 2px;
+  }
+  .profil-right {}
+  .profil-headline {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.75rem, 3vw, 2.75rem);
+    font-weight: 800; line-height: 1.1;
+    letter-spacing: -0.02em; margin-bottom: 0.5rem;
+  }
+  .profil-headline span { color: var(--gold); }
+  .profil-role {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em;
+    color: var(--muted); text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .profil-bio {
+    font-size: 1rem; color: var(--cream2); line-height: 1.8;
+    border-left: 2px solid var(--border2);
+    padding-left: 1.5rem; margin-bottom: 2.5rem;
+  }
+  .profil-bio strong { color: var(--cream); }
+  .profil-cards {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: var(--border); border: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+  .pcard {
+    background: var(--bg);
+    padding: 1.25rem 1.5rem;
+    transition: background 0.25s;
+  }
+  .pcard:hover { background: var(--bg2); }
+  .pcard-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em;
+    color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .pcard-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.95rem; font-weight: 700; color: var(--cream);
+  }
+  .pcard-sub { font-size: 12px; color: var(--cream2); margin-top: 3px; }
+  .profil-skills-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em;
+    color: var(--muted); text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .skills-wrap { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-pill {
+    font-size: 12px;
+    padding: 5px 14px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+    color: var(--cream2);
+    transition: all 0.2s;
+  }
+  .skill-pill:hover { border-color: var(--gold); color: var(--gold); }
+  .skill-pill.highlight {
+    background: rgba(232,160,32,0.1);
+    border-color: var(--border2);
+    color: var(--gold2);
+  }
+  @media (max-width: 768px) {
+    .profil-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .profil-photo-frame { aspect-ratio: 1/1; }
+    .profil-cards { grid-template-columns: 1fr; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 2px; }
+
+  /* ── RESPONSIVE MINIMAL ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 1.5rem; }
+    #hero { padding: 0 1.5rem 4rem; }
+    .vision-inner, .plat-grid, .clubs-intro { grid-template-columns: 1fr; gap: 2rem; }
+    .prog-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .axe-row { grid-template-columns: 60px 1fr; gap: 1rem; }
+    .axe-icon { display: none; }
+    .axe-num { font-size: 3rem; }
+    .clubs-grid { grid-template-columns: repeat(2, 1fr); }
+    .collab-banner { flex-direction: column; text-align: center; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">ESP UCAD — Comité Exécutif des Étudiants</div>
+  <ul class="nav-links">
+    <li><a href="#profil">Profil</a></li>
+    <li><a href="#vision">Vision</a></li>
+    <li><a href="#programme">Programme</a></li>
+    <li><a href="#plateforme">Plateforme</a></li>
+    <li><a href="#clubs">Clubs</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-tag">Commission Pédagogique · Comité Exécutif des Étudiants</div>
+
+  <h1 class="hero-name">
+    Mouhamadou<br>
+    Rassoul<br>
+    <em>NAME</em>
+  </h1>
+
+  <div class="hero-title">
+    Président de la Commission Pédagogique<br>
+    <span class="hero-sub">École Supérieure Polytechnique — Université Cheikh Anta Diop de Dakar</span>
+  </div>
+
+  <div class="hero-cta">
+    <a href="#programme" class="btn-primary">
+      <span>Voir le programme</span>
+      <span>↓</span>
+    </a>
+    <a href="#vision" class="btn-ghost">
+      <span>Notre vision</span>
+      <span>→</span>
+    </a>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- PROFIL -->
+<section id="profil">
+  <div class="profil-inner">
+
+    <!-- PHOTO -->
+    <div class="profil-photo-wrap reveal">
+      <div class="profil-photo-frame" id="photoFrame">
+        
+        <img src="5911301530193693887.jpg" alt="Photo de Mouhamadou Rassoul" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+
+      </div>
+      <div class="photo-corner photo-corner-tl"></div>
+      <div class="photo-corner photo-corner-tr"></div>
+      <div class="photo-corner photo-corner-bl"></div>
+      <div class="photo-corner photo-corner-br"></div>
+      <div class="profil-badge-overlay" id="badgeOverlay" style="display:none">
+        <div>
+          <div class="overlay-name">Mouhamadou Rassoul NAME</div>
+          <div class="overlay-promo">DIC2 Info · ESP UCAD · 2025–2026</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BIO -->
+    <div class="profil-right">
+      <div class="section-label reveal">Qui suis-je ?</div>
+      <h2 class="profil-headline reveal reveal-delay-1">
+        Étudiant,<br>
+        <span>Leader</span>,<br>
+        Bâtisseur.
+      </h2>
+      <div class="profil-role reveal reveal-delay-2">DIC2 Info · ESP UCAD · Dakar</div>
+
+      <p class="profil-bio reveal reveal-delay-2">
+        Étudiant en <strong>DIC2 Info</strong> à l'École Supérieure Polytechnique de Dakar, je me forme à l'intersection du <strong>Génie Logiciel</strong>, des <strong>réseaux</strong>, du <strong>Big Data</strong>, de la <strong>Sécurité</strong>etc.<br><br>
+        Je m'engage activement dans la vie de l'école en tant que <strong>Président du club ISOC ESP</strong>, avec la conviction qu'un étudiant bien entouré, bien informé et bien connecté devient un professionnel exceptionnel.<br><br>
+        C'est exactement cette conviction qui me pousse à prendre la tête de la Commission Pédagogique — pour <strong>construire, concrètement, l'ESP de demain</strong>.
+      </p>
+
+      <div class="profil-cards reveal reveal-delay-3">
+        <div class="pcard">
+          <div class="pcard-label">Formation</div>
+          <div class="pcard-value">DIC2</div>
+          <div class="pcard-sub">Génie Informatique</div>
+        </div>
+        <div class="pcard">
+          <div class="pcard-label">Engagement</div>
+          <div class="pcard-value">Président du club ISOC ESP</div>
+          <div class="pcard-sub">Club numérique de l'ESP</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section id="vision">
+  <div class="vision-inner">
+    <div>
+      <div class="section-label reveal">Vision</div>
+      <blockquote class="vision-quote reveal reveal-delay-1">
+        "L'ESP ne manque pas de <em>talent</em>. Elle manque de <em>ponts</em>."
+      </blockquote>
+      <div class="vision-stats">
+        <div class="stat-box reveal reveal-delay-2">
+          <div class="stat-num" data-count="15">0</div>
+          <div class="stat-label">clubs actifs à fédérer autour du pédagogique</div>
+        </div>
+        <div class="stat-box reveal reveal-delay-3">
+          <div class="stat-num" data-count="5">0</div>
+          <div class="stat-label">axes stratégiques pour transformer l'expérience étudiante</div>
+        </div>
+        <div class="stat-box reveal reveal-delay-4">
+          <div class="stat-num" data-count="1">0</div>
+          <div class="stat-label">plateforme numérique pour centraliser toutes les ressources</div>
+        </div>
+        <div class="stat-box reveal reveal-delay-5">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">opportunités à créer ensemble pour les étudiants ESP</div>
+        </div>
+      </div>
+    </div>
+    <div class="vision-text reveal reveal-delay-2">
+      <p>
+        La Commission Pédagogique n'est pas un bureau administratif de plus. C'est le <strong style="color:var(--cream)">lien vivant</strong> entre les étudiants, l'administration, et le monde professionnel.
+      </p>
+      <p>
+        Chaque étudiant de l'ESP a des ressources, des compétences, et des connexions précieuses. Mon rôle : <strong style="color:var(--cream)">construire les canaux</strong> qui permettent à ces richesses de circuler librement au bénéfice de tous.
+      </p>
+      <p>
+        Ce programme n'est pas une liste de promesses. C'est une <strong style="color:var(--cream)">feuille de route concrète</strong>, avec des outils réels et des partenaires déjà identifiés.
+      </p>
+      <p style="margin-top:1.5rem; padding: 1.25rem; border-left: 3px solid var(--border2); background: rgba(232,160,32,0.04);">
+        <span style="font-family:'Space Mono',monospace; font-size:11px; color:var(--gold); letter-spacing:0.1em;">ENGAGEMENT</span><br>
+        <span style="color:var(--cream2); font-size:0.95rem;">Chaque initiative sera lancée dans les 60 premiers jours. Pas de programme tiroir.</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMME -->
+<section id="programme">
+  <div class="prog-header reveal">
+    <div>
+      <div class="section-label">Programme</div>
+      <h2 class="section-title">4 axes.<br><span>Un seul objectif.</span></h2>
+    </div>
+    <p class="prog-intro">Des actions concrètes, mesurables et réalisables pour transformer l'expérience académique à l'ESP.</p>
+  </div>
+
+  <div class="axes-grid">
+    <div class="axe-row reveal">
+      <div class="axe-num">01</div>
+      <div class="axe-content">
+        <div class="axe-title">Plateforme Numérique Étudiante</div>
+        <p class="axe-desc">Un hub centralisé où les étudiants partagent cours, TDs, anciens examens et opportunités de stages. Filtrage par filière, niveau et domaine. Alimenté par et pour les étudiants.</p>
+        <div class="axe-tags">
+          <span class="tag">Bibliothèque collaborative</span>
+          <span class="tag">Bourse de stages</span>
+          <span class="tag">Annuaire alumni</span>
+          <span class="tag">Actualités académiques</span>
+          <span class="tag">HINTS</span>
+        </div>
+      </div>
+      <div class="axe-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+    </div>
+
+    <div class="axe-row reveal reveal-delay-1">
+      <div class="axe-num">02</div>
+      <div class="axe-content">
+        <div class="axe-title">Dialogue Administration–Étudiants</div>
+        <p class="axe-desc">Instaurer un cadre structuré de remontée de doléances, des réunions régulières avec les chefs de département, et un système de représentation par filière avec des délégués actifs.</p>
+        <div class="axe-tags">
+          <span class="tag">Doléances formalisées</span>
+          <span class="tag">Réunions périodiques</span>
+          <span class="tag">Délégués par département</span>
+        </div>
+      </div>
+      <div class="axe-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+    </div>
+
+    <div class="axe-row reveal reveal-delay-2">
+      <div class="axe-num">03</div>
+      <div class="axe-content">
+        <div class="axe-title">Soutien Académique Entre Pairs</div>
+        <p class="axe-desc">Tutorat inter-niveaux, groupes de révision organisés avant les partiels, ateliers de soft skills (CV, entretiens, rédaction de rapports) et préparation aux certifications externes.</p>
+        <div class="axe-tags">
+          <span class="tag">Mentorat des mames</span>
+          <span class="tag">Soft skills</span>
+          <span class="tag">Hackathons</span>
+          <span class="tag">Certifications</span>
+        </div>
+      </div>
+      <div class="axe-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+    </div>
+
+    <div class="axe-row reveal reveal-delay-4">
+      <div class="axe-num">04</div>
+      <div class="axe-content">
+        <div class="axe-title">Fédération des Clubs ESP</div>
+        <p class="axe-desc">Faire de la Commission le hub qui coordonne et valorise les actions pédagogiques des clubs. Calendrier partagé, attestations de compétences, forum annuel des clubs, et newsletter mensuelle commune.</p>
+        <div class="axe-tags">
+          <span class="tag">Calendrier commun</span>
+          <span class="tag">Attestations ESP</span>
+          <span class="tag">Forum annuel</span>
+          <span class="tag">Newsletter mensuelle</span>
+        </div>
+      </div>
+      <div class="axe-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATEFORME -->
+<section id="plateforme">
+  <div class="plat-inner">
+    <div class="section-label reveal">Axe 01 — Focus</div>
+    <h2 class="section-title reveal reveal-delay-1">La plateforme qui <span>manquait</span><br>à l'ESP.</h2>
+
+    <div class="plat-grid">
+      <div class="plat-mockup reveal reveal-delay-1">
+        <div class="mockup-bar">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+        </div>
+        <div class="mockup-nav">
+          <div class="m-tab active">Ressources</div>
+          <div class="m-tab">Stages</div>
+          <div class="m-tab">Alumni</div>
+          <div class="m-tab">Actus</div>
+        </div>
+        <div class="mockup-body">
+          <div class="m-search">
+            <span class="m-search-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
+            <span class="m-search-text">Rechercher cours, HINT, examens, stages...</span>
+          </div>
+          <div class="m-card">
+            <div class="m-card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+            <div>
+              <div class="m-card-title">HINT — Réseaux & Télécom 2022</div>
+              <div class="m-card-sub">DIC2 · Épreuves anciennes promos · Tous depts</div>
+              <div class="m-badge">34 épreuves disponibles</div>
+            </div>
+          </div>
+          <div class="m-card">
+            <div class="m-card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+            <div>
+              <div class="m-card-title">Cours Réseaux — Semestre 2</div>
+              <div class="m-card-sub">DIC2 Info · Partagé par Fatou D. · il y a 2h</div>
+              <div class="m-badge">Téléchargé 47×</div>
+            </div>
+          </div>
+          <div class="m-card">
+            <div class="m-card-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+            <div>
+              <div class="m-card-title">Stage Data Science — Expresso</div>
+              <div class="m-card-sub">Dakar · 3 mois · Rémunéré · Signalé par Ibra K.</div>
+              <div class="m-badge">Nouvelle opportunité</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="plat-features reveal reveal-delay-2">
+        <div class="feat-item">
+          <div class="feat-num">01</div>
+          <div>
+            <div class="feat-title">HINT — Épreuves des anciennes promos</div>
+            <p class="feat-desc">Accès centralisé aux épreuves de toutes les anciennes promotions, <strong style="color:var(--cream)">pour tous les départements</strong> — Informatique, Génie Civil, Gestion, GCBA, et plus. Classées par matière, prof et année.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-num">02</div>
+          <div>
+            <div class="feat-title">Bibliothèque collaborative par département</div>
+            <p class="feat-desc">Cours, TDs et examens corrigés partagés par les étudiants, organisés par niveau et filière. Disponible pour <strong style="color:var(--cream)">l'ensemble des départements de l'ESP</strong>.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-num">03</div>
+          <div>
+            <div class="feat-title">Bourse de stages communautaire</div>
+            <p class="feat-desc">Chaque opportunité de stage trouvée par un étudiant est partagée à toute la communauté ESP avec retour d'expérience.</p>
+          </div>
+        </div>
+        <div class="feat-item">
+          <div class="feat-num">04</div>
+          <div>
+            <div class="feat-title">Annuaire alumni</div>
+            <p class="feat-desc">Accès direct aux anciens de l'ESP en poste.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLUBS -->
+<section id="clubs">
+  <div class="clubs-inner">
+    <div class="clubs-intro">
+      <div>
+        <div class="section-label reveal">Axe 05 — Collaboration</div>
+        <h2 class="section-title reveal reveal-delay-1">Les clubs ESP,<br><span>ensemble.</span></h2>
+      </div>
+      <p class="vision-text reveal reveal-delay-2" style="font-size:1rem; color:var(--cream2); line-height:1.8;">
+        Les clubs de l'ESP représentent une richesse immense mais sous-exploitée. La Commission devient le <strong style="color:var(--cream)">hub</strong> qui coordonne leurs actions et leur donne une scène commune — transformant leurs activités en opportunités pédagogiques reconnues pour tous.
+      </p>
+    </div>
+
+    <div class="clubs-grid reveal">
+      <div class="club-card">
+        <div class="club-emoji"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div class="club-name">ISOC ESP</div>
+        <div class="club-action">Ateliers cybersécurité, CTF, numérique responsable</div>
+      </div>
+      <div class="club-card">
+        <div class="club-emoji"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/></svg></div>
+        <div class="club-name">Club IA</div>
+        <div class="club-action">Sessions ML/Data, projets guidés inter-filières</div>
+      </div>
+      <div class="club-card">
+        <div class="club-emoji"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+        <div class="club-name">Robotech</div>
+        <div class="club-action">Hackathons hardware, initiation à l'embarqué</div>
+      </div>
+      <div class="club-card">
+        <div class="club-emoji"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
+        <div class="club-name">Synapse</div>
+        <div class="club-action">Coding challenges, ressources info, projets promo</div>
+      </div>
+      <div class="club-card">
+        <div class="club-emoji"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="club-name">Polyleader</div>
+        <div class="club-action">Leadership, prise de parole, gestion de projet</div>
+      </div>
+      <div class="club-card">
+        <div class="club-emoji"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="club-name">Club Anglais</div>
+        <div class="club-action">CV/LM en anglais, prépa entretiens internationaux</div>
+      </div>
+      <div class="club-card">
+        <div class="club-emoji"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="1" fill="currentColor"/><circle cx="17.5" cy="10.5" r="1" fill="currentColor"/><circle cx="8.5" cy="7.5" r="1" fill="currentColor"/><circle cx="6.5" cy="12.5" r="1" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg></div>
+        <div class="club-name">CLAC</div>
+        <div class="club-action">Communication, affiches, storytelling des projets ESP</div>
+      </div>
+      <div class="club-card">
+        <div class="club-emoji"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"/><path d="M14 9.3V1.99"/><path d="M8.5 2h7"/><path d="M14 9.3a6.5 6.5 0 1 1-4 0"/><path d="M5.58 16.5h12.85"/></svg></div>
+        <div class="club-name">ATOMUS</div>
+        <div class="club-action">Vulgarisation scientifique, passerelle sciences/tech</div>
+      </div>
+    </div>
+
+    <div class="collab-banner reveal">
+      <div class="collab-text">
+        Chaque club qui anime 3 ateliers pédagogiques émet des <span>attestations signées par la Commission</span> — une première à l'ESP.
+      </div>
+      <a href="#" class="btn-primary">Forum des clubs →</a>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section id="manifesto">
+  <div class="manifesto-inner">
+    <div class="section-label reveal" style="text-align:center">Engagement</div>
+    <p class="manifesto-text reveal reveal-delay-1">
+      "Mon rôle n'est pas de tout faire seul.<br>
+      C'est de <em>créer les conditions</em><br>
+      pour que chacun à l'ESP<br>
+      puisse aller <em>plus loin</em>."
+    </p>
+    <div class="manifesto-sig reveal reveal-delay-2">
+      <div class="sig-line"></div>
+      <div class="sig-name">MOUHAMADOU RASSOUL NAME — COMMISSION PÉDAGOGIQUE · ESP UCAD · 2026</div>
+      <div class="sig-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">ESP UCAD · Comité Exécutif des Étudiants · 2026</div>
+  <div class="footer-logo">Commission Pédagogique</div>
+</footer>
+
+<script>
+
+  // Nav scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Counter animation
+  function animateCounter(el, target) {
+    let start = 0;
+    const duration = 1200;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const val = Math.floor(progress * target);
+      el.textContent = val + (progress < 1 ? '' : '+');
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const target = parseInt(e.target.dataset.count);
+        if (!isNaN(target)) animateCounter(e.target, target);
+        counterObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+  // Smooth nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
