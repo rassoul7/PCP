@@ -529,12 +529,37 @@ html, body {
     color: var(--muted);
   }
 
-  /* ── FOOTER ── */
+ /* =========================================
+   ── FOOTER ── 
+   ========================================= */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 3rem;
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between;
+}
+
+.footer-left {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; 
+  color: var(--muted); 
+  letter-spacing: 0.08em;
+}
+
 /* Le bloc de droite qui aligne Réseaux + Séparateur + Logo */
 .footer-right {
   display: flex;
   align-items: center;
   gap: 1.5rem; 
+}
+
+.footer-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem; 
+  font-weight: 800;
+  color: var(--cream);
 }
 
 /* Les icônes nues, sans fond */
@@ -564,12 +589,12 @@ html, body {
 }
 
 /* =========================================
-   RESPONSIVITÉ SUR MOBILE
+   RESPONSIVITÉ DU FOOTER SUR MOBILE
    ========================================= */
 @media screen and (max-width: 850px) {
   footer {
     flex-direction: column; /* Empile le texte de gauche et le bloc de droite */
-    gap: 2rem;
+    gap: 1.5rem;
     padding: 2.5rem 1.5rem;
     text-align: center;
   }
