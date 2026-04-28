@@ -530,58 +530,59 @@ html, body {
   }
 
   /* ── FOOTER ── */
-  /* Style des icônes de réseaux */
+/* Le bloc de droite qui aligne Réseaux + Séparateur + Logo */
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; 
+}
+
+/* Les icônes nues, sans fond */
 .footer-socials {
   display: flex;
-  gap: 1.5rem; /* Espace entre les icônes */
+  gap: 1.2rem;
 }
 
 .footer-socials a {
-  color: var(--muted); /* Même couleur que ton texte footer-left */
+  color: var(--muted); /* Couleur discrète par défaut */
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
 }
 
 .footer-socials a:hover {
-  color: var(--gold); /* Devient doré au survol */
-  transform: translateY(-3px); /* Petit saut élégant */
+  color: var(--gold); /* S'illumine en doré au survol */
+  transform: scale(1.1); /* Petit zoom très subtil (pas de saut) */
+}
+
+/* La petite barre verticale de séparation */
+.footer-separator {
+  color: var(--muted);
+  opacity: 0.3; /* Très discret */
+  font-size: 1.2rem;
+  font-weight: 300;
 }
 
 /* =========================================
-   Responsivité pour ton Footer sur Mobile
+   RESPONSIVITÉ SUR MOBILE
    ========================================= */
 @media screen and (max-width: 850px) {
   footer {
-    flex-direction: column; /* Empile les éléments sur mobile */
-    gap: 1.5rem;
+    flex-direction: column; /* Empile le texte de gauche et le bloc de droite */
+    gap: 2rem;
     padding: 2.5rem 1.5rem;
     text-align: center;
   }
   
-  .footer-socials {
-    order: -1; /* Astuce : fait passer les réseaux sociaux tout en haut sur téléphone */
+  .footer-right {
+    flex-direction: column-reverse; /* Met les réseaux sous le logo sur téléphone */
+    gap: 1.2rem;
+  }
+
+  .footer-separator {
+    display: none; /* On cache la petite barre sur mobile, pas besoin ! */
   }
 }
-  footer {
-    background: var(--bg);
-    border-top: 1px solid var(--border);
-    padding: 2.5rem 3rem;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .footer-left {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px; color: var(--muted); letter-spacing: 0.08em;
-  }
-  .footer-right {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px; color: var(--muted); letter-spacing: 0.08em;
-  }
-  .footer-logo {
-    font-family: 'Syne', sans-serif;
-    font-size: 1rem; font-weight: 800;
-    color: var(--cream);
-  }
 
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
@@ -1268,23 +1269,23 @@ html, body {
 <!-- FOOTER -->
 <footer>
   <div class="footer-left">ESP UCAD · Comité Exécutif des Étudiants · 2026</div>
-  <div class="footer-logo">Commission Pédagogique</div>
-  <div class="footer-content">
-    <p>© 2026 — Mouhamadou Rassoul NAME — DIC2 Info ESP</p>
-    
+  
+  <div class="footer-right">
     <div class="footer-socials">
       <a href="www.linkedin.com/in/rassoul-name-a3358b267" target="_blank" aria-label="LinkedIn">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
       </a>
-      
       <a href="https://github.com/rassoul7" target="_blank" aria-label="GitHub">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
       </a>
-
       <a href="https://www.instagram.com/rassoul_name?igsh=MWRpNHFueXR1ODB3aQ==" target="_blank" aria-label="Instagram">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
       </a>
     </div>
+
+    <span class="footer-separator">|</span>
+
+    <div class="footer-logo">Commission Pédagogique</div>
   </div>
 </footer>
 
